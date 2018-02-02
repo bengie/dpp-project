@@ -1,0 +1,97 @@
+{
+  "name": "DNR-Live-Service",
+  "version": "4.0.0",
+  "description": "Default DPP project",
+  "main": "gulpfile.js",
+  "author": "De Persgroep Publishing",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:persgroep/[REPOHERE].git"
+  },
+  "scripts": {
+    "start": "gulp",
+    "backend": "bash gradlew clean bootrun",
+    "pre-commit": "exit 1"
+  },
+  "clean": [
+    "src/main/resources/static/"
+  ],
+  "js": {
+    "files": [
+      {
+        "src": [
+          "frontend/js/helpers/**/*.js",
+          "frontend/js/classes/**/*.js",
+          "frontend/js/modules/*.js"
+        ],
+        "dest": "src/main/resources/static/js/",
+        "file": "main.js"
+      }
+    ],
+    "hint": {
+      "src": [
+        "frontend/js/**/*.js"
+      ]
+    },
+    "watch": "frontend/js/**/*.js"
+  },
+  "sass": {
+    "files": [
+      {
+        "src": "frontend/sass/*.scss",
+        "dest": "src/main/resources/static/css/",
+        "file": "main.css"
+      }
+    ],
+    "hint": {
+      "src": [
+        "frontend/sass/**/*.scss"
+      ]
+    },
+    "watch": "frontend/sass/**/*.scss",
+    "autoprefixer": {
+      "browsers": [
+        "Firefox >=27",
+        "Chrome >= 33",
+        "ie >= 9",
+        "Safari >= 7",
+        "iOS >= 7",
+        "Android >= 4.1"
+      ]
+    }
+  },
+  "img": {
+    "src": "frontend/img/**/*",
+    "dest": "src/main/resources/static/",
+    "watch": "frontend/img/**/*"
+  },
+  "git": {
+    "hooks": {
+      "precommit": {
+        "src": "scripts/.pre-commit",
+        "dest": ".git/hooks/pre-commit"
+      }
+    }
+  },
+  "devDependencies": {
+    "del": "^2.2.1",
+    "eslint": "^1.5.1",
+    "file-exists": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-bless": "^3.2.1",
+    "gulp-cached": "^1.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-copy": "0.0.2",
+    "gulp-eslint": "^1.1.0",
+    "gulp-htmllint": "0.0.9",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-scss-lint": "^0.4.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.7"
+  }
+}

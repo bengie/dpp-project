@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+// BOX-SIZING
+//
+// A Better way to implement box-sizing to your elements
+// This way it's easier to override the box-sizing property on a component
+////////////////////////////////////////////////////////////////////////////////
+
+@mixin better-box-sizing {
+	html {
+		box-sizing: border-box;
+	}
+
+	*,
+	*:before,
+	*:after {
+		box-sizing: inherit;
+	}
+}

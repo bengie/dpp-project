@@ -1,0 +1,82 @@
+#!/bin/sh
+# Based on https://github.com/WouterSioen/pre-commit/blob/master/pre-commit
+# On Mac, don't forget to give the file executable rights "chmod +x .pre-commit"
+
+if [ -f ~/.bash_profile ]; then
+	source ~/.bash_profile
+fi
+
+PATH="/usr/local/bin:$PATH"
+WEBSRC="./"
+
+echo PWD
+
+# create empty errors array
+declare -a errors=()
+
+# First check if scss-lint is installed
+scsslinter=$(which scss-lint)
+if [ "$scsslinter" == '' ]; then
+	echo 'WARNING: SCSS Lint is not installed command line.'
+	echo 'Please execute:'
+	echo '	$ gem install scss-lint'
+	echo 'More info:'
+	echo '	https://github.com/causes/scss-lint'
+	exit 1
+fi
+
+# Then check if jsint is installed
+jshinter=$WEBSRC/node_modules/eslint
+if [ ! -d "$jshinter" ]; then
+	echo 'WARNING: ESLint is not installed in this project'
+	echo 'Please execute:'
+	echo '	$ npm install eslint --save-dev'
+	echo 'More info:'
+	echo '	http://eslint.org/'
+	exit 1
+fi
+
+# fetch all changed sass files and validate them
+files=$(git diff --cached --name-only --diff-filter=ACMR | grep "\.scss$")
+if [ -n "$files" ]; then
+	echo
+	echo "Checking SCSS Files"
+	echo "------------------"
+
+	scss-lint $files --config $WEBSRC/.scss-lint.yml
+	RESULT=$?
+
+	if [ $RESULT != 0 ]; then
+		errors=(${errors[@]} "pre-commit-scsslint")
+	fi
+
+fi
+
+# fetch all changed javascript files and validate them
+files=$(git diff --cached --name-only --diff-filter=ACMR | grep "\.js$")
+if [ -n "$files" ]; then
+	echo
+	echo "Checking Javascript Files"
+	echo "------------------"
+
+	$WEBSRC/node_modules/eslint/bin/eslint.js $files --config $WEBSRC/.eslintrc --rule 'no-console: 2' --ignore-path $WEBSRC/.eslintignore
+	RESULT=$?
+
+	if [ $RESULT != 0 ]; then
+		errors=(${errors[@]} "pre-commit-eslint")
+	fi
+fi
+
+# if we have errors, exit with 1
+if [ -n "$errors" ]; then
+	echo
+	echo "Errors"
+	echo "------------------"
+
+	for error in "${errors[@]}"
+	do
+		echo "$error failed"
+	done
+
+	exit 1
+fi

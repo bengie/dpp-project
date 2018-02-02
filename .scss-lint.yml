@@ -1,0 +1,69 @@
+# Default application configuration that all configurations inherit from.
+
+scss_files: "sass/**/*.scss"
+
+linters:
+
+  ColorVariable:
+    enabled: true
+
+  EmptyLineBetweenBlocks:
+    enabled: true
+    ignore_single_line_blocks: false
+
+  EmptyRule:
+    enabled: false
+
+  ImportantRule:
+    enabled: true
+
+  Indentation:
+    enabled: true
+    character: tab # or 'space'
+    width: 1
+
+  NameFormat:
+    enabled: false
+    allow_leading_underscore: true
+    convention: hyphenated_lowercase # or 'hyphenated_lowercase', 'BEM', or a regex pattern
+
+  NestingDepth:
+    max_depth: 3
+
+  PlaceholderInExtend:
+    enabled: false
+
+  PropertySortOrder:
+    enabled: true
+    order: smacss
+    ignore_unspecified: false
+
+  PseudoElement:
+    enabled: false
+
+  QualifyingElement:
+    enabled: true
+    allow_element_with_attribute: true
+    allow_element_with_class: false
+    allow_element_with_id: false
+
+  SelectorDepth:
+    max_depth: 3
+
+  SelectorFormat:
+    enabled: true
+    convention: hyphenated_BEM # 'hyphenated_lowercase' or 'BEM', or 'snake_case', or 'camel_case', or a regex pattern
+
+  SingleLinePerProperty:
+    enabled: true
+    allow_single_line_rule_sets: false
+
+  VendorPrefixes:
+    enabled: false
+    identifier_list: base
+    include: []
+    exclude: []
+
+  SpaceAroundOperator:
+    enabled: true
+    style: one_space # or 'no_space'

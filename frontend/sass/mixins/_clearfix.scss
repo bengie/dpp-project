@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+// CLEARFIX
+//
+// description:
+// simplyfied clearfix
+// no need for display: table because we don't need to support <IE8
+// This way we get margin collapsing back
+////////////////////////////////////////////////////////////////////////////////
+@mixin clearfix {
+	&::after {
+		display: block;
+		clear: both;
+		content: '';
+	}
+}
